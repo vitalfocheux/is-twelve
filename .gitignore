@@ -1,3 +1,5 @@
 build/
 googletest/
 .vscode/
+Proof.*
+!Proof.pdf

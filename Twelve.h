@@ -1,6 +1,7 @@
 #ifndef TWELVE_H
 #define TWELVE_H
 
+#include "Constant_Twelve.h"
 #include <string>
 #include <vector>
 #include <list>
@@ -10,6 +11,7 @@
 #include <array>
 #include <queue>
 #include <stack>
+#include <iostream>
 
 namespace is {
 
@@ -43,41 +45,155 @@ namespace is {
             static bool twelve(std::u32string n);
 
             template<typename T>
-            static bool twelve(std::vector<T> n);
+            static bool twelve(std::vector<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                T value;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return twelve(value);
+            }
 
             template<typename T>
-            static bool twelve(std::list<T> n);
+            static bool twelve(std::list<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                T value;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return return twelve(value);
+            }
 
             template<typename T>
-            static bool twelve(std::set<T> n);
+            static bool twelve(std::set<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                T value;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return twelve(value);
+            }
 
             template<typename T>
-            static bool twelve(std::multiset<T> n);
+            static bool twelve(std::multiset<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                T value;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return twelve(value);
+            }
+
+            /**
+             * TODO
+            */
+            template<typename K, typename T>
+            static bool twelve(std::map<K, T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                T value;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return twelve(value);
+            }
 
             template<typename K, typename T>
-            static bool twelve(std::map<K, T> n);
-
-            template<typename K, typename T>
-            static bool twelve(std::multimap<K, T> n);
+            static bool twelve(std::multimap<K, T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T>
-            static bool twelve(std::queue<T> n);
+            static bool twelve(std::queue<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T>
-            static bool twelve(std::priority_queue<T> n);
+            static bool twelve(std::priority_queue<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T>
-            static bool twelve(std::stack<T> n);
+            static bool twelve(std::stack<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T, std::size_t N>
-            static bool twelve(std::array<T, N> n);
+            static bool twelve(std::array<T, N> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T>
-            static bool twelve(std::tuple<T> n);
+            static bool twelve(std::tuple<T> n){
+                if(n.size() == constant::TWELVE){
+                    return true;
+                }
+                std::size_t value = 0;
+                for(auto v : n){
+                    twelve(v);
+                    value += v;
+                }
+                return value == constant::TWELVE;
+            }
 
             template<typename T1, typename T2>
-            static bool twelve(std::pair<T1, T2> n);
-
+            static bool twelve(std::pair<T1, T2> n){
+                return twelve(n.first) || twelve(n.second) || twelve(n.first + n.second);
+            }
             
     };
 }
