@@ -50,11 +50,10 @@ namespace is {
                     return true;
                 }
                 T value;
-                for(auto v : n){
+                for(const auto& v : n){
                     twelve(v);
-                    value += v;
                 }
-                return twelve(value);
+                return false;
             }
 
             template<typename T>
@@ -67,13 +66,16 @@ namespace is {
                     twelve(v);
                     value += v;
                 }
-                return return twelve(value);
+                return twelve(value);
             }
 
             template<typename T>
             static bool twelve(std::set<T> n){
                 if(n.size() == constant::TWELVE){
                     return true;
+                }
+                if(n.empty()){
+                    return false;
                 }
                 T value;
                 for(auto v : n){
@@ -105,9 +107,8 @@ namespace is {
                     return true;
                 }
                 T value;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                for(const auto& v : n){
+
                 }
                 return twelve(value);
             }

@@ -6,9 +6,6 @@
 #include <codecvt>
 
 namespace is {
-    bool Twelve::twelve(bool n){
-        return n;
-    }
     bool Twelve::twelve(char n){
         return n == constant::twelve_c;
     }
