@@ -12,12 +12,12 @@
 #include <queue>
 #include <stack>
 #include <iostream>
+#include <type_traits>
 
 namespace is {
 
     class Twelve {
         public:
-            static bool twelve(bool n);
             static bool twelve(char n);
             static bool twelve(signed char n);
             static bool twelve(unsigned char n);
@@ -49,11 +49,24 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                T value;
-                for(const auto& v : n){
-                    twelve(v);
+                if(n.empty()){
+                    return false;
                 }
-                return false;
+                std::vector<T> value_c;
+                T value = T();
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    if constexpr (is_one_of<T>::value) {
+                        value += v;
+                    } else if constexpr (is_std_vector<T>::value){
+                        continue;
+                    }else{
+                        value_c.push_back(v);
+                    }
+                }
+                return twelve(value) || twelve(value_c);
             }
 
             template<typename T>
@@ -61,10 +74,12 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                T value;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
                 return twelve(value);
             }
@@ -74,13 +89,12 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                if(n.empty()){
-                    return false;
-                }
-                T value;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
                 return twelve(value);
             }
@@ -90,27 +104,31 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                T value;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
                 return twelve(value);
             }
 
-            /**
-             * TODO
-            */
             template<typename K, typename T>
             static bool twelve(std::map<K, T> n){
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                T value;
+                std::vector<K> key;
+                std::vector<T> value;
                 for(const auto& v : n){
-
+                    if(twelve(v.first) || twelve(v.second)){
+                        return true;
+                    }
+                    key.push_back(v.first);
+                    value.push_back(v.second);
                 }
-                return twelve(value);
+                return twelve(key) || twelve(value);
             }
 
             template<typename K, typename T>
@@ -118,12 +136,16 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<K> key;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v.first) || twelve(v.second)){
+                        return true;
+                    }
+                    key.push_back(v.first);
+                    value.push_back(v.second);
                 }
-                return value == constant::TWELVE;
+                return twelve(key) || twelve(value);
             }
 
             template<typename T>
@@ -131,12 +153,14 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
-                return value == constant::TWELVE;
+                return twelve(value);
             }
 
             template<typename T>
@@ -144,12 +168,14 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
-                return value == constant::TWELVE;
+                return twelve(value);
             }
 
             template<typename T>
@@ -157,12 +183,14 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
-                return value == constant::TWELVE;
+                return twelve(value);
             }
 
             template<typename T, std::size_t N>
@@ -170,12 +198,14 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
-                return value == constant::TWELVE;
+                return twelve(value);
             }
 
             template<typename T>
@@ -183,19 +213,52 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
-                std::size_t value = 0;
-                for(auto v : n){
-                    twelve(v);
-                    value += v;
+                std::vector<T> value;
+                for(const auto& v : n){
+                    if(twelve(v)){
+                        return true;
+                    }
+                    value.push_back(v);
                 }
-                return value == constant::TWELVE;
+                return twelve(value);
             }
 
             template<typename T1, typename T2>
             static bool twelve(std::pair<T1, T2> n){
                 return twelve(n.first) || twelve(n.second) || twelve(n.first + n.second);
             }
-            
+        private:
+            template <typename T>
+            struct is_one_of : std::disjunction<
+                std::is_same<T, char>,
+                std::is_same<T, signed char>,
+                std::is_same<T, unsigned char>,
+                std::is_same<T, short>,
+                std::is_same<T, unsigned short>,
+                std::is_same<T, int>,
+                std::is_same<T, unsigned int>,
+                std::is_same<T, long>,
+                std::is_same<T, unsigned long>,
+                std::is_same<T, long long>,
+                std::is_same<T, unsigned long long>,
+                std::is_same<T, wchar_t>,
+                std::is_same<T, char16_t>,
+                std::is_same<T, char32_t>,
+                std::is_same<T, float>,
+                std::is_same<T, double>,
+                std::is_same<T, long double>,
+                std::is_same<T, std::string>,
+                std::is_same<T, std::wstring>,
+                std::is_same<T, std::u16string>,
+                std::is_same<T, std::u32string>
+            > {};
+
+            // Spécialisation de modèle pour vérifier si un type T est un std::vector
+            template <typename T>
+            struct is_std_vector : std::false_type {};
+
+            template <typename T, typename Alloc>
+            struct is_std_vector<std::vector<T, Alloc>> : std::true_type {};
     };
 }
 
