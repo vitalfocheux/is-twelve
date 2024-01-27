@@ -154,11 +154,12 @@ namespace is {
                     return true;
                 }
                 std::vector<T> value;
-                for(const auto& v : n){
-                    if(twelve(v)){
+                while(!n.empty()){
+                    if(twelve(n.front())){
                         return true;
                     }
-                    value.push_back(v);
+                    value.push_back(n.front());
+                    n.pop();
                 }
                 return twelve(value);
             }
@@ -169,11 +170,12 @@ namespace is {
                     return true;
                 }
                 std::vector<T> value;
-                for(const auto& v : n){
-                    if(twelve(v)){
+                while(!n.empty()){
+                    if(twelve(n.top())){
                         return true;
                     }
-                    value.push_back(v);
+                    value.push_back(n.top());
+                    n.pop();
                 }
                 return twelve(value);
             }
@@ -184,11 +186,12 @@ namespace is {
                     return true;
                 }
                 std::vector<T> value;
-                for(const auto& v : n){
-                    if(twelve(v)){
+                while(!n.empty()){
+                    if(twelve(n.top())){
                         return true;
                     }
-                    value.push_back(v);
+                    value.push_back(n.top());
+                    n.pop();
                 }
                 return twelve(value);
             }
@@ -208,20 +211,17 @@ namespace is {
                 return twelve(value);
             }
 
-            template<typename T>
-            static bool twelve(std::tuple<T> n){
-                if(n.size() == constant::TWELVE){
+            template<typename... T>
+            static bool twelve(std::tuple<T...> n){
+                if(std::tuple_size<std::tuple<T...>>::value == constant::TWELVE){
                     return true;
                 }
-                std::vector<T> value;
-                for(const auto& v : n){
-                    if(twelve(v)){
-                        return true;
-                    }
-                    value.push_back(v);
-                }
-                return twelve(value);
+                /**
+                 * TODO: Implémenter la vérification de la valeur de chaque élément du tuple
+                */
+                return false;
             }
+            
 
             template<typename T1, typename T2>
             static bool twelve(std::pair<T1, T2> n){
