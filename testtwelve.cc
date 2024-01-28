@@ -1,6 +1,27 @@
 #include "gtest/gtest.h"
 
 #include "Twelve.h"
+#include <numeric>
+#include <cmath>
+
+void caesarCodeShift(std::string& code, int shift){
+  std::string codeShift = "";
+  shift %= 26;
+  for(const char& c : code){
+    if(c < 'A' || c > 'z' || (c > 'Z' && c < 'a')){
+      codeShift.push_back(c);
+      continue;
+    }
+    unsigned char n = c + shift;
+    if(n > 'z' && c >= 'a' && c <= 'z'){
+      n = (n % ('z' + 1)) + 'a';
+    }else if(n > 'Z' && c >= 'A' && c <= 'Z'){
+      n = (n % ('Z' + 1)) + 'A';
+    }
+    codeShift.push_back(n);
+  }
+  code = codeShift;
+}
 
 TEST(Twelve, bool) {
   EXPECT_TRUE(is::Twelve::twelve(12));
@@ -92,6 +113,112 @@ TEST(Math_Divide, Simple){
 
 TEST(Math, Wee){
   EXPECT_TRUE(is::Twelve::twelve(((((((((1 + 2) * 3) - 4) / 5) % 6) << 1) >> 1) ^ 7) & 8) | 9);
+}
+
+TEST(Math, Wee2){
+  std::vector<int> numbers = {1, 13, 6, 9, 12};
+
+  // Calcul des différences adjacentes
+  std::vector<int> differences(numbers.size());
+  std::adjacent_difference(numbers.begin(), numbers.end(), differences.begin());
+  EXPECT_TRUE(is::Twelve::twelve(differences));
+}
+
+TEST(Math, square_of_root){
+  EXPECT_TRUE(is::Twelve::twelve(std::sqrt(144)));
+}
+
+/**
+ * Caesar code already work with string which use latin alphabet
+*/
+TEST(CaesarCode, Twelve){
+  std::string twelve = "twelve";
+  caesarCodeShift(twelve, 12);
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  std::cout << twelve << std::endl;
+  twelve = "twelve";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, Douze){
+  std::string twelve = "douze";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "douze";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, Doce){
+  std::string twelve = "doce";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "doce";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, XII_Uppercase){
+  std::string twelve = "XII";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "XII";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, XII_Lowercase){
+  std::string twelve = "xii";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "xii";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, Tunka_paya){
+  std::string twelve = "tunka paya";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "tunka paya";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, On_iki){
+  std::string twelve = "on iki";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "on iki";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, Tannifilan){
+  std::string twelve = "tannifilan";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "tannifilan";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
+}
+
+TEST(CaesarCode, Hamabi){
+  std::string twelve = "hamabi";
+  caesarCodeShift(twelve, 12);
+  std::cout << twelve << std::endl;
+  EXPECT_TRUE(is::Twelve::twelve(twelve));
+  twelve = "hamabi";
+  caesarCodeShift(twelve, 13);
+  EXPECT_FALSE(is::Twelve::twelve(twelve));
 }
 
 TEST(FrenchConstant, Douze_Simple){
@@ -571,6 +698,300 @@ TEST(FrenchConstant, French_President_Count_First_Republic_Pair){
   EXPECT_FALSE(is::Twelve::twelve(pair));
   pair = std::make_pair("Paul", "Deschanel");
   EXPECT_FALSE(is::Twelve::twelve(pair));
+}
+
+TEST(EnglishConstant, American_President){
+  std::string president = "Zachary Taylor", presidentU = "ZACHARY TAYLOR";
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  EXPECT_FALSE(is::Twelve::twelve(presidentU));
+}
+
+TEST(EnglishConstant, American_President_Vector){
+  std::vector<std::string> president{"Zachary", " ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary", " Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary ", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::vector<std::string> presidentV;
+  for (char c : presidentS) {
+    presidentV.push_back(std::string(1, c));
+  }
+  EXPECT_TRUE(is::Twelve::twelve(presidentV));
+}
+
+TEST(EnglishConstant, American_President_List){
+  std::list<std::string> president{"Zachary", " ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary", " Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = {"Zachary ", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::list<std::string> presidentL;
+  for (char c : presidentS) {
+    presidentL.push_back(std::string(1, c));
+  }
+  EXPECT_TRUE(is::Twelve::twelve(presidentL));
+}
+
+TEST(EnglishConstant, American_President_Set){
+  std::set<std::string> president{"Zachary", " ", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary ", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary ", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::set<std::string> presidentSet;
+  for (char c : presidentS) {
+    presidentSet.insert(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentSet));
+}
+
+TEST(EnglishConstant, American_President_Multiset){
+  std::multiset<std::string> president{"Zachary", " ", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary ", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary ", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Zachary", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::multiset<std::string> presidentSet;
+  for (char c : presidentS) {
+    presidentSet.insert(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentSet));
+}
+
+TEST(EnglishConstant, American_President_Map){
+  std::map<std::string, std::string> president{{"Zachary", " "}, {"Taylor", " "}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary ", "Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary", " Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary ", " Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary", "Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::map<std::string, std::string> presidentMap;
+  for (char c : presidentS) {
+    presidentMap.insert(std::make_pair(std::string(1, c), " "));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentMap));
+}
+
+TEST(EnglishConstant, American_President_Multimap){
+  std::multimap<std::string, std::string> president{{"Zachary", " "}, {"Taylor", " "}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary ", "Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary", " Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary ", " Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Zachary", "Taylor"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::multimap<std::string, std::string> presidentMap;
+  for (char c : presidentS) {
+    presidentMap.insert(std::make_pair(std::string(1, c), " "));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentMap));
+}
+
+TEST(EnglishConstant, American_President_Queue){
+  std::queue<std::string> president({"Zachary", " ", "Taylor"});
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Zachary ", "Taylor"});
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Zachary", " Taylor"});
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Zachary ", " Taylor"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Zachary", "Taylor"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::queue<std::string> presidentQueue;
+  for (char c : presidentS) {
+    presidentQueue.push(std::string(1, c));
+  }
+  EXPECT_TRUE(is::Twelve::twelve(presidentQueue));
+}
+
+TEST(EnglishConstant, American_President_ProrityQueue){
+  std::vector<std::string> presidentV{"Zachary", " ", "Taylor"};
+  std::priority_queue<std::string> president(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Zachary ", "Taylor"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  presidentV = {"Zachary", " Taylor"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  presidentV = {"Zachary ", " Taylor"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Zachary", "Taylor"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::priority_queue<std::string> presidentQueue;
+  for (char c : presidentS) {
+    presidentQueue.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentQueue));
+}
+
+TEST(EnglishConstant, American_President_Stack){
+  std::stack<std::string> president;
+  president.push("Zachary");
+  president.push(" ");
+  president.push("Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Zachary ");
+  president.push("Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Zachary");
+  president.push(" Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Zachary ");
+  president.push(" Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Zachary");
+  president.push("Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::stack<std::string> presidentStack;
+  for (char c : presidentS) {
+    presidentStack.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentStack));
+  presidentS = "rolyaT yrahcaZ";
+  presidentStack = std::stack<std::string>();
+  for (char c : presidentS) {
+    presidentStack.push(std::string(1, c));
+  }
+  EXPECT_TRUE(is::Twelve::twelve(presidentStack));
+}
+
+TEST(EnglishConstant, American_President_Array){
+  std::array<std::string, 3> president{"Zachary", " ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Zachary ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Zachary", " Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Zachary ", " Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Zachary", "Taylor"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Zachary Taylor";
+  std::array<std::string, 100> presidentArray;
+  std::size_t index = 0;
+  for (char c : presidentS) {
+    presidentArray[index++] = std::string(1, c);
+  }
+  EXPECT_TRUE(is::Twelve::twelve(presidentArray));
+}
+
+TEST(EnglishConstant, American_President_Pair){
+  std::pair<std::string, std::string> pair{"Zachary ", "Taylor"};
+  EXPECT_TRUE(is::Twelve::twelve(pair));
+  pair = std::make_pair("Zachary", "Taylor");
+  EXPECT_FALSE(is::Twelve::twelve(pair));
+}
+
+TEST(RomanConstant, XII_Uppercase){
+  EXPECT_TRUE(is::Twelve::twelve("XII"));
+}
+
+TEST(RomanConstant, XII_Uppercase_Vector){
+  std::vector<std::string> XII = {"X", "I", "I"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
+}
+
+TEST(RomanConstant, XII_Uppercase_List){
+  std::list<std::string> XII = {"X", "I", "I"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
+}
+
+TEST(RomanConstant, XII_Uppercase_Set){
+  std::set<std::string> XII = {"X", "I"};
+  EXPECT_FALSE(is::Twelve::twelve(XII));
+}
+
+// TEST(RomanConstant, XII_UpperCase_MultiSet){
+//   std::multiset<std::string> XII = {"X", "I", "I"};
+//   EXPECT_TRUE(is::Twelve::twelve(XII));
+// }
+
+// TEST(RomanConstant, XII_Uppercase_Map){
+//   std::map<std::string, std::string> XII = {"X": "", "I": "", "I": ""};
+//   EXPECT_TRUE(is::Twelve::twelve(XII));
+// }
+
+TEST(RomanConstant, XII_Uppercase_Array){
+  std::array<std::string, 3> XII = {"X", "I", "I"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
+}
+
+TEST(RomanConstant, XII_Lowercase){
+  EXPECT_TRUE(is::Twelve::twelve("xii"));
+}
+
+TEST(RomanConstant, XII_Lowercase_Vector){
+  std::vector<std::string> XII = {"x", "i", "i"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
+}
+
+TEST(RomanConstant, XII_Lowercase_List){
+  std::list<std::string> XII = {"x", "i", "i"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
+}
+
+TEST(RomanConstant, XII_Lowercase_Set){
+  std::set<std::string> XII = {"x", "i"};
+  EXPECT_FALSE(is::Twelve::twelve(XII));
+}
+
+// TEST(RomanConstant, XII_Lowercase_MultiSet){
+//   std::multiset<std::string> XII = {"x", "i", "i"};
+//   EXPECT_TRUE(is::Twelve::twelve(XII));
+// }
+
+// TEST(RomanConstant, XII_Lowercase_Map){
+//   std::map<std::string, std::string> XII = {"x": "", "i": "", "i": ""};
+//   EXPECT_TRUE(is::Twelve::twelve(XII));
+// }
+
+TEST(RomanConstant, XII_Lowercase_Array){
+  std::array<std::string, 3> XII = {"x", "i", "i"};
+  EXPECT_TRUE(is::Twelve::twelve(XII));
 }
 
 int main(int argc, char **argv) {
