@@ -18,8 +18,8 @@ namespace constant {
         /**
          * Twelve in different languages.
         */
-        "xii", // Roman numeral minus
-        "XII", // Roman numeral majuscule
+        "xii", // Roman numeral lowercase
+        "XII", // Roman numeral uppercase
         "douze", // French
         "douzième", // French (ordinal)
         "twelve", // English
@@ -41,6 +41,18 @@ namespace constant {
         "dvanaest", // Bosnian
         "дванадесет", // Bulgarian
 
+        /**
+         * Twelve in different language with caesar code
+        */
+        "fiqxhq", // Twelve
+        "paglq", // Douze
+        "paoq", // Doce
+        "JUU", // XII
+        "juu", // xii
+        "fgzwm bmkm", // tunka_paya
+        "az uwu", // On iki
+        "fmzzuruxmz", // Tannifilan
+        "tmymnu", // Hamabi
 
         /**
          * French
