@@ -327,31 +327,6 @@ TEST(FrenchConstant, French_President_Array){
     EXPECT_TRUE(is::Twelve::twelve(presidentArray));
   }
 
-  // TEST(FrenchConstant, French_President_Tuple){
-  //   std::tuple<std::string, std::string> president = std::make_tuple("Alexandre", "Millerand");
-  //   // EXPECT_TRUE(is::Twelve::twelve(president));
-  //   // president = std::make_tuple("Alexandre ", "Millerand");
-  //   // EXPECT_TRUE(is::Twelve::twelve(president));
-  //   // president = std::make_tuple("Alexandre", " Millerand");
-  //   // EXPECT_TRUE(is::Twelve::twelve(president));
-  //   // president = std::make_tuple("Alexandre ", " Millerand");
-  //   // EXPECT_FALSE(is::Twelve::twelve(president));
-  //   // president = std::make_tuple("Alexandre", "Millerand");
-  //   // EXPECT_FALSE(is::Twelve::twelve(president));
-  //   // std::string presidentS = "Alexandre Millerand";
-  //   // std::tuple<std::string, std::string> presidentTuple;
-  //   // std::size_t index = 0;
-  //   // for (char c : presidentS) {
-  //   //   if(index == 0){
-  //   //     std::get<0>(presidentTuple) = std::string(1, c);
-  //   //   }else{
-  //   //     std::get<1>(presidentTuple) = std::string(1, c);
-  //   //   }
-  //   //   ++index;
-  //   // }
-  //   // EXPECT_TRUE(is::Twelve::twelve(presidentTuple));
-  // }
-
   TEST(FrenchConstant, French_President_Pair){
     std::pair<std::string, std::string> pair{"Alexandre ", "Millerand"};
     EXPECT_TRUE(is::Twelve::twelve(pair));
@@ -376,6 +351,219 @@ TEST(FrenchConstant, French_President_Count_First_Republic){
   std::string president = "Paul Deschanel", presidentU = "PAUL DESCHANEL";
   EXPECT_FALSE(is::Twelve::twelve(president));
   EXPECT_FALSE(is::Twelve::twelve(presidentU));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Vector){
+  std::vector<std::string> president{"Paul", " ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::vector<std::string> presidentV;
+  for (char c : presidentS) {
+    presidentV.push_back(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentV));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_List){
+  std::list<std::string> president{"Paul", " ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::list<std::string> presidentL;
+  for (char c : presidentS) {
+    presidentL.push_back(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentL));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Set){
+  std::set<std::string> president{"Paul", " ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::set<std::string> presidentSet;
+  for (char c : presidentS) {
+    presidentSet.insert(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentSet));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Multiset){
+  std::multiset<std::string> president{"Paul", " ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul ", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {"Paul", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::multiset<std::string> presidentSet;
+  for (char c : presidentS) {
+    presidentSet.insert(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentSet));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Map){
+  std::map<std::string, std::string> president{{"Paul", " "}, {"Deschanel", " "}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul ", "Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul", " Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul ", " Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul", "Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::map<std::string, std::string> presidentMap;
+  for (char c : presidentS) {
+    presidentMap.insert(std::make_pair(std::string(1, c), " "));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentMap));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Multimap){
+  std::multimap<std::string, std::string> president{{"Paul", " "}, {"Deschanel", " "}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul ", "Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul", " Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul ", " Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = {{"Paul", "Deschanel"}};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::multimap<std::string, std::string> presidentMap;
+  for (char c : presidentS) {
+    presidentMap.insert(std::make_pair(std::string(1, c), " "));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentMap));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Queue){
+  std::queue<std::string> president({"Paul", " ", "Deschanel"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Paul ", "Deschanel"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Paul", " Deschanel"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Paul ", " Deschanel"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::queue<std::string>({"Paul", "Deschanel"});
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::queue<std::string> presidentQueue;
+  for (char c : presidentS) {
+    presidentQueue.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentQueue));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_ProrityQueue){
+  std::vector<std::string> presidentV{"Paul", " ", "Deschanel"};
+  std::priority_queue<std::string> president(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Paul ", "Deschanel"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Paul", " Deschanel"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Paul ", " Deschanel"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  presidentV = {"Paul", "Deschanel"};
+  president = std::priority_queue<std::string>(presidentV.begin(), presidentV.end());
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::priority_queue<std::string> presidentQueue;
+  for (char c : presidentS) {
+    presidentQueue.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentQueue));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Stack){
+  std::stack<std::string> president;
+  president.push("Paul");
+  president.push(" ");
+  president.push("Deschanel");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Paul ");
+  president.push("Deschanel");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Paul");
+  president.push(" Deschanel");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Paul ");
+  president.push(" Deschanel");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::stack<std::string>();
+  president.push("Paul");
+  president.push("Deschanel");
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::stack<std::string> presidentStack;
+  for (char c : presidentS) {
+    presidentStack.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentStack));
+  presidentS = "lenahcseD luaP";
+  presidentStack = std::stack<std::string>();
+  for (char c : presidentS) {
+    presidentStack.push(std::string(1, c));
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentStack));
+}
+
+TEST(FrenchConstant, French_President_Count_First_Republic_Array){
+  std::array<std::string, 3> president{"Paul", " ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Paul ", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Paul", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Paul ", " Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  president = std::array<std::string, 3>{"Paul", "Deschanel"};
+  EXPECT_FALSE(is::Twelve::twelve(president));
+  std::string presidentS = "Paul Deschanel";
+  std::array<std::string, 100> presidentArray;
+  std::size_t index = 0;
+  for (char c : presidentS) {
+    presidentArray[index++] = std::string(1, c);
+  }
+  EXPECT_FALSE(is::Twelve::twelve(presidentArray));
 }
 
 TEST(FrenchConstant, French_President_Count_First_Republic_Pair){
