@@ -18,7 +18,10 @@ namespace constant {
         /**
          * Twelve in different languages.
         */
+        "xii", // Roman numeral minus
+        "XII", // Roman numeral majuscule
         "douze", // French
+        "douzième", // French (ordinal)
         "twelve", // English
         "doce", // Spanish
         "اثني عشر", // Arabic
