@@ -209,19 +209,7 @@ namespace is {
                     value.push_back(v);
                 }
                 return twelve(value);
-            }
-
-            template<typename... T>
-            static bool twelve(std::tuple<T...> n){
-                if(std::tuple_size<std::tuple<T...>>::value == constant::TWELVE){
-                    return true;
-                }
-                /**
-                 * TODO: Implémenter la vérification de la valeur de chaque élément du tuple
-                */
-                return false;
-            }
-            
+            }            
 
             template<typename T1, typename T2>
             static bool twelve(std::pair<T1, T2> n){
