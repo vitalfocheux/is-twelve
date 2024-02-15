@@ -9,6 +9,25 @@
 #include <set>
 #include <string>
 
+std::string caesarCode(std::string code, int shift){
+    std::string codeShift = "";
+    shift %= 26;
+    for(const char& c : code){
+        if(c < 'A' || c > 'z' || (c > 'Z' && c < 'a')){
+        codeShift.push_back(c);
+        continue;
+        }
+        unsigned char n = c + shift;
+        if(n > 'z' && c >= 'a' && c <= 'z'){
+        n = (n % ('z' + 1)) + 'a';
+        }else if(n > 'Z' && c >= 'A' && c <= 'Z'){
+        n = (n % ('Z' + 1)) + 'A';
+        }
+        codeShift.push_back(n);
+    }
+    return codeShift;
+}
+
 namespace constant {
 
     constexpr int TWELVE = 12;

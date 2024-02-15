@@ -74,6 +74,9 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
+                if(n.empty()){
+                    return false;
+                }
                 std::vector<T> value;
                 for(const auto& v : n){
                     if(twelve(v)){
@@ -88,6 +91,9 @@ namespace is {
             static bool twelve(std::set<T> n){
                 if(n.size() == constant::TWELVE){
                     return true;
+                }
+                if(n.empty()){
+                    return false;
                 }
                 std::vector<T> value;
                 for(const auto& v : n){
@@ -104,6 +110,9 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
+                if(n.empty()){
+                    return false;
+                }
                 std::vector<T> value;
                 for(const auto& v : n){
                     if(twelve(v)){
@@ -118,6 +127,9 @@ namespace is {
             static bool twelve(std::map<K, T> n){
                 if(n.size() == constant::TWELVE){
                     return true;
+                }
+                if(n.empty()){
+                    return false;
                 }
                 std::vector<K> key;
                 std::vector<T> value;
@@ -136,6 +148,9 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
+                if(n.empty()){
+                    return false;
+                }
                 std::vector<K> key;
                 std::vector<T> value;
                 for(const auto& v : n){
@@ -153,6 +168,9 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
+                if(n.empty()){
+                    return false;
+                }
                 std::vector<T> value;
                 while(!n.empty()){
                     if(twelve(n.front())){
@@ -168,6 +186,9 @@ namespace is {
             static bool twelve(std::priority_queue<T> n){
                 if(n.size() == constant::TWELVE){
                     return true;
+                }
+                if(n.empty()){
+                    return false;
                 }
                 std::vector<T> value;
                 while(!n.empty()){
@@ -185,6 +206,9 @@ namespace is {
                 if(n.size() == constant::TWELVE){
                     return true;
                 }
+                if(n.empty()){
+                    return false;
+                }
                 std::vector<T> value;
                 while(!n.empty()){
                     if(twelve(n.top())){
@@ -200,6 +224,9 @@ namespace is {
             static bool twelve(std::array<T, N> n){
                 if(n.size() == constant::TWELVE){
                     return true;
+                }
+                if(n.empty()){
+                    return false;
                 }
                 std::vector<T> value;
                 for(const auto& v : n){
@@ -247,6 +274,60 @@ namespace is {
 
             template <typename T, typename Alloc>
             struct is_std_vector<std::vector<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_list : std::false_type {};
+
+            template <typename T, typename Alloc>
+            struct is_std_list<std::list<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_set : std::false_type {};
+
+            template<typename T, typename Alloc>
+            struct is_std_set<std::set<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_multiset : std::false_type {};
+            
+            template<typename T, typename Alloc>
+            struct is_std_multiset<std::multiset<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_map : std::false_type {};
+
+            template<typename K, typename T, typename Alloc>
+            struct is_std_map<std::map<K, T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_multimap : std::false_type {};
+
+            template<typename K, typename T, typename Alloc>
+            struct is_std_multimap<std::multimap<K, T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_queue : std::false_type {};
+
+            template<typename T, typename Alloc>
+            struct is_std_queue<std::queue<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_priority_queue : std::false_type {};
+
+            template<typename T, typename Alloc>
+            struct is_std_priority_queue<std::priority_queue<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_stack : std::false_type {};
+
+            template<typename T, typename Alloc>
+            struct is_std_stack<std::stack<T, Alloc>> : std::true_type {};
+
+            template<typename T>
+            struct is_std_array : std::false_type {};
+
+            template<typename T, std::size_t N>
+            struct is_std_array<std::array<T, N>> : std::true_type {};
     };
 }
 

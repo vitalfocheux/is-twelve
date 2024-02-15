@@ -62,11 +62,11 @@ namespace is {
     }
 
     bool Twelve::twelve(std::string n){
-        return n == "12" || constant::twelve_s.find(n) != constant::twelve_s.end();
+        return n.size() == constant::TWELVE || n == "12" || constant::twelve_s.find(n) != constant::twelve_s.end();
     }
 
     bool Twelve::twelve(std::wstring n){
-        if(n == L"12"){
+        if(n == L"12" || n.size() == constant::TWELVE){
             return true;
         }
         std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
@@ -75,7 +75,7 @@ namespace is {
     }
 
     bool Twelve::twelve(std::u16string n){
-        if(n == u"12"){
+        if(n == u"12" || n.size() == constant::TWELVE){
             return true;
         }
         std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> converter;
@@ -84,7 +84,7 @@ namespace is {
     }
 
     bool Twelve::twelve(std::u32string n){
-        if(n == U"12"){
+        if(n == U"12" || n.size() == constant::TWELVE){
             return true;
         }
         std::wstring_convert<std::codecvt_utf8_utf16<char32_t>, char32_t> converter;
